@@ -195,7 +195,7 @@ nav{display:flex;background:#fff;border-top:1px solid #e3e6f2;padding-bottom:env
       <div class="row"><span>金鈴鐺</span><b id="s4"></b></div>
       <div class="row"><span>擊退大盜</span><b id="s6"></b></div>
       <div class="row"><span>遊玩時間</span><b id="s5"></b></div></div>
-    <div class="box"><div class="ttl">🏆 農場成就 <small id="acnt" style="color:#667;font-weight:600"></small></div><div class="plat" id="plat"><div class="pi">💎</div><div><small>白金成就</small><b>與承融兌換一杯拿鐵</b><small id="pp"></small></div></div><div class="ag" id="ag"></div></div>
+    <div class="box"><div class="ttl">🏆 農場成就 <small id="acnt" style="color:#667;font-weight:600"></small></div><div class="plat" id="plat"><div class="pi">💎</div><div><small>白金成就</small><b>與承融兌換???</b><small id="pp">完成所有黃金成就後解鎖</small></div></div><div class="ag" id="ag"></div></div>
     <button class="rst" id="rst">🗑️ 重置遊戲進度</button>
   </section>
 </main>
@@ -230,7 +230,7 @@ const AC=[
 {id:'fc',i:'🔥',d:'狂暴期間點擊',v:s=>s.fclicks,T:[10,50,300,1500,5e3,1e4],N:['熱血沸騰','狂暴新手','連擊高手','狂暴戰士','暴走牛仔','狂暴之王']},
 {id:'th',i:'🥷',d:'擊退偷奶大盜',v:s=>s.thieves,T:[1,5,15,30,60,100],N:['小試身手','護奶衛士','抓賊高手','牧場警長','賊見愁','偷奶剋星']},
 {id:'pl',i:'⏰',d:'遊玩時間',v:s=>s.played,T:[600,3600,18000,43200,86400,172800],N:['初來乍到','常客','牧場居民','日夜守候','資深牧場主','永恆牧場主'],x:tm}];
-const S={milk:0,total:0,clicks:0,played:0,mute:false,bells:0,fclicks:0,lv:{},frenzy:0,buy:1,cnt:{},lic:0,fr:0,mood:0,thieves:0,sword:0};
+const S={milk:0,total:0,clicks:0,played:0,mute:false,bells:0,fclicks:0,lv:{},frenzy:0,buy:1,cnt:{},lic:0,fr:0,mood:0,thieves:0,sword:0,pl:false};
 UP.forEach(u=>S.cnt[u.id]=0);
 const items=()=>UP.reduce((a,u)=>a+S.cnt[u.id],0);
 const fz=()=>Date.now()<S.frenzy?7:1;
@@ -273,9 +273,9 @@ function achDraw(show){let n=0,y=0;AC.forEach(a=>{const v=a.v(S),l=a.T.filter(x=
   e.querySelector('.ap').textContent=l>=6?'已達最高階（黃）':`${fm(v)} / ${fm(nx)}（下一階：${TN[l]}）`;
   e.querySelector('.lv').textContent=l?TN[l-1]+' '+l+'/6':'未解鎖'});
   const pl=y===AC.length;
-  if(pl&&S.pl===false&&!loading){toast('💎 白金成就達成：與承融兌換一杯拿鐵！');tone(523,1568,.6,'triangle',.3)}
+  if(pl && !S.pl && !loading){toast('💎 白金成就達成：與承融兌換一杯拿鐵 ☕！');tone(523,1568,.6,'triangle',.3)}
   S.pl=pl;
-  if(show){$('#plat').classList.toggle('on',pl);$('#pp').textContent=pl?'已達成，快去兌換吧！':'集滿全部成就的黃階即可點亮（'+y+' / '+AC.length+'）'}
+  if(show){$('#plat').classList.toggle('on',pl);$('#plat').querySelector('b').textContent = pl ? '與承融兌換一杯拿鐵 ☕' : '與承融兌換???';$('#pp').textContent=pl?'已達成，快去兌換吧！':'集滿全部成就的黃階即可點亮（'+y+' / '+AC.length+'）';}
   if(show)$('#acnt').textContent=n+' / '+AC.length*6}
 const LT=[1,10,25,50,70,85],lvOf=n=>LT.filter(x=>n>=x).length;
 const SP={
